@@ -14,7 +14,10 @@ class CategoryPage extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text("Categories"),
+            title: const Text(
+              "Categories",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
             centerTitle: true,
           ),
           body: Padding(

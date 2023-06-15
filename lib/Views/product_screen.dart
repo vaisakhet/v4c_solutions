@@ -79,7 +79,9 @@ class _ProductCategoryPagesState extends State<ProductCategoryPages> {
                     );
                   } else {
                     return const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: Color.fromARGB(255, 19, 82, 14),
+                      ),
                     );
                   }
                 });

@@ -31,7 +31,44 @@ class _HomeScreenState extends State<HomeScreen> {
         return DefaultTabController(
             length: 3,
             child: Scaffold(
-              appBar: AppBar(),
+              appBar: AppBar(
+                title: const Text(
+                  "SHOPPY",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'acme',
+                  ),
+                ),
+                leading: const Padding(
+                  padding: EdgeInsets.only(left: 15),
+                  child: SizedBox(
+                    height: 20,
+                    child: CircleAvatar(
+                      backgroundImage:
+                          AssetImage("assets/images/profile_image.jpg"),
+                      // radius: 10,
+                      maxRadius: 10,
+                      minRadius: 10,
+                    ),
+                  ),
+                ),
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 5),
+                    child: IconButton(
+                        onPressed: () {}, icon: const Icon(Icons.search)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.notifications)),
+                  )
+                ],
+                elevation: 5,
+                centerTitle: true,
+              ),
               bottomNavigationBar: BottomNavigationBar(
                   currentIndex: _currentIndex,
                   type: BottomNavigationBarType.fixed,
@@ -45,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   items: [
                     const BottomNavigationBarItem(
-                        icon: Icon(Icons.preview), label: 'Products'),
+                        icon: Icon(Icons.home_outlined), label: 'Home'),
                     BottomNavigationBarItem(
                         label: 'Cart',
                         icon: Stack(
