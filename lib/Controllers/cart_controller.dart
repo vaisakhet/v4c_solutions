@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:v4c_solutions/Services/local_storage_repository.dart';
 import '../Models/cart_model.dart';
 
 class CartController extends GetxController {
+  LocalStorageRepository _localStorageRepository = LocalStorageRepository();
+
   Map<String, CartItem> _items = {};
 
   Map<String, CartItem> get items {
@@ -51,30 +55,54 @@ class CartController extends GetxController {
       double? price,
       String? description,
       String? image,
-      String? productId}) {
+      String? productId}) async {
     if (_items.containsKey(productId)) {
-      _items.update(
-        productId!,
-        (existingItem) => CartItem(
-          title: existingItem.title,
-          quantity: existingItem.quantity + 1,
-          price: existingItem.price,
-          productId: existingItem.productId,
-          description: existingItem.description,
-          image: existingItem.image,
-        ),
-      );
+      Box box = await _localStorageRepository.openBox();
+      _localStorageRepository.addProductsToCartList(
+          box,
+          _items.update(
+              productId!,
+              (existingItem) => CartItem(
+                  title: existingItem.title,
+                  price: existingItem.price,
+                  image: existingItem.image,
+                  productId: productId,
+                  description: existingItem.description,
+                  quantity: existingItem.quantity + 1)));
+      // _items.update(
+      //   productId!,
+      //   (existingItem) => CartItem(
+      //     title: existingItem.title,
+      //     quantity: existingItem.quantity + 1,
+      //     price: existingItem.price,
+      //     productId: existingItem.productId,
+      //     description: existingItem.description,
+      //     image: existingItem.image,
+      //   ),
+      //);
     } else {
-      _items.putIfAbsent(
-        productId!,
-        () => CartItem(
-            title: title!,
-            quantity: 1,
-            price: price!,
-            productId: productId,
-            description: description!,
-            image: image!),
-      );
+      Box box = await _localStorageRepository.openBox();
+      _localStorageRepository.addProductsToCartList(
+          box,
+          _items.putIfAbsent(
+              productId!,
+              () => CartItem(
+                  title: title!,
+                  price: price!,
+                  image: image!,
+                  productId: productId,
+                  description: description!,
+                  quantity: 1)));
+      // _items.putIfAbsent(
+      //   productId!,
+      //   () => CartItem(
+      //       title: title!,
+      //       quantity: 1,
+      //       price: price!,
+      //       productId: productId,
+      //       description: description!,
+      //       image: image!),
+      // );
     }
     Get.snackbar(
       "$title Add to cart",
@@ -98,18 +126,30 @@ class CartController extends GetxController {
     // update();
   }
 
-  void incrementQuantity(String productId) {
-    _items.update(
-      productId,
-      (existingItem) => CartItem(
-        title: existingItem.title,
-        quantity: existingItem.quantity + 1,
-        price: existingItem.price,
-        productId: existingItem.productId,
-        description: existingItem.description,
-        image: existingItem.image,
-      ),
-    );
+  void incrementQuantity(String productId) async {
+    Box box = await _localStorageRepository.openBox();
+    _localStorageRepository.addProductsToCartList(
+        box,
+        _items.update(
+            productId,
+            (existingItem) => CartItem(
+                title: existingItem.title,
+                price: existingItem.price,
+                image: existingItem.image,
+                productId: productId,
+                description: existingItem.description,
+                quantity: existingItem.quantity + 1)));
+    // _items.update(
+    //   productId,
+    //   (existingItem) => CartItem(
+    //     title: existingItem.title,
+    //     quantity: existingItem.quantity + 1,
+    //     price: existingItem.price,
+    //     productId: existingItem.productId,
+    //     description: existingItem.description,
+    //     image: existingItem.image,
+    //   ),
+    // );
     Get.snackbar(
       "Add Item",
       "Success",
@@ -127,7 +167,9 @@ class CartController extends GetxController {
 
   /// Degrement Quantity
 
-  void decrementQuantity(String productId) {
+  void decrementQuantity(String productId) async {
+    // Box box = await _localStorageRepository.openBox();
+
     CartItem item =
         _items.values.firstWhere((element) => element.productId == productId);
 

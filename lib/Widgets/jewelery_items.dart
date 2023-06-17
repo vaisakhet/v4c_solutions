@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v4c_solutions/Controllers/products_controller.dart';
 import 'package:v4c_solutions/Widgets/category_selected_details.dart';
-import 'package:v4c_solutions/Widgets/product_details.dart';
-
 import '../Models/jewelery_model.dart';
 
 class JeweleryItems extends StatelessWidget {

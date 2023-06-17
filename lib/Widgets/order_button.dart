@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../Controllers/cart_controller.dart';
 import '../Views/home_screen.dart';
 
@@ -30,46 +29,44 @@ class PlaceOrderButton extends StatelessWidget {
             onPressed: () {
               controller.clearCart();
               showDialog(
-                  context: context,
-                  builder: (ctx) => AlertDialog(
-                        title: const Text(
-                          'Success',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: const Text(
+                    'Success',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  content: const Text(
+                    'Your order succefully placed !',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                  actions: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (ctx) => HomeScreen()),
+                            (route) => false);
+                      },
+                      child: Container(
+                        height: 40,
+                        width: 60,
+                        decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(16)),
+                        child: const Center(
+                          child: Text(
+                            'done',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400),
+                          ),
                         ),
-                        content: const Text(
-                          'Your order succefully placed !',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500),
-                        ),
-                        actions: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (ctx) => HomeScreen()),
-                                  (route) => false);
-                            },
-                            child: Container(
-                              height: 40,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius: BorderRadius.circular(16)),
-                              child: const Center(
-                                child: Text(
-                                  'done',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ));
+                      ),
+                    )
+                  ],
+                ),
+              );
             },
           ),
         );
